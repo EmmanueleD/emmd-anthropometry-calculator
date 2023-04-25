@@ -2,7 +2,15 @@
   <div
     class="app-footer flex justify-content-between align-items-center px-4 text-xs"
   >
-    <span>made by <a href="https://www.emmd.dev" target="_blank">emmd</a></span>
+    <div class="flex align-items-center cursor-pointer">
+      <span>made by</span>
+      <img
+        class="ml-1"
+        style="width: 60px"
+        @click="openEMMD"
+        src="../../assets/img/emmd-logo.png"
+      />
+    </div>
     <span
       ><label class="mr-2">{{ $t("language.changeTheLanguage") }}</label
       ><select v-model="$i18n.locale">
@@ -16,3 +24,9 @@
     >
   </div>
 </template>
+
+<script setup>
+function openEMMD() {
+  window.open("https://www.emmd.dev", "_blank")
+}
+</script>
