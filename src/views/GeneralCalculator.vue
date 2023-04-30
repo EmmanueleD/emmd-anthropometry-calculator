@@ -11,7 +11,10 @@
         </template> -->
         <template #content>
           <div class="grid">
-            <div class="col-12 md:col-6 mb-3">
+            <Divider>
+              {{ $t("sectionTitles.GeneralData") }}
+            </Divider>
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <Dropdown
                   @change="changeSex"
@@ -43,7 +46,7 @@
                 <label for="username">{{ $t("sex") }}</label>
               </span>
             </div>
-            <div class="col-12 md:col-6 mb-3">
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeAge"
@@ -56,7 +59,7 @@
                 <label for="age">{{ $t("age") }}</label>
               </span>
             </div>
-            <div class="col-12 md:col-6 mb-3">
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeHeight"
@@ -71,7 +74,7 @@
                 <label for="height">{{ $t("height") }} (m)</label>
               </span>
             </div>
-            <div class="col-12 md:col-6 mb-3">
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeWeight"
@@ -86,8 +89,10 @@
                 <label for="weight">{{ $t("weight") }} (kg)</label>
               </span>
             </div>
-            <Divider></Divider>
-            <div class="col-12 md:col-6 lg:col-3 mb-3">
+            <Divider>
+              {{ $t("sectionTitles.Skinfolds") }}
+            </Divider>
+            <div class="col-12 md:col-3 lg:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeTricepsSkinfold"
@@ -104,7 +109,7 @@
                 >
               </span>
             </div>
-            <div class="col-12 md:col-6 lg:col-3 mb-3">
+            <div class="col-12 md:col-3 lg:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeSubscapularSkinfold"
@@ -121,7 +126,7 @@
                 >
               </span>
             </div>
-            <div class="col-12 md:col-6 lg:col-3 mb-3">
+            <div class="col-12 md:col-3 lg:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeSuprailiacSkinfold"
@@ -138,7 +143,7 @@
                 >
               </span>
             </div>
-            <div class="col-12 md:col-6 lg:col-3 mb-3">
+            <div class="col-12 md:col-3 lg:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeBicepsSkinfold"
@@ -155,8 +160,10 @@
                 >
               </span>
             </div>
-            <Divider></Divider>
-            <div class="col-12 md:col-6 mb-3">
+            <Divider>
+              {{ $t("sectionTitles.Diameters") }}
+            </Divider>
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeWristDiameter"
@@ -173,7 +180,7 @@
                 >
               </span>
             </div>
-            <div class="col-12 md:col-6 mb-3">
+            <div class="col-12 md:col-3 mb-3">
               <span class="p-float-label">
                 <InputNumber
                   @blur="changeFemurDiameter"
@@ -187,6 +194,26 @@
                 ></InputNumber>
                 <label for="femurDiameter"
                   >{{ $t("femurDiameter") }} (cm)</label
+                >
+              </span>
+            </div>
+            <Divider>
+              {{ $t("sectionTitles.Circumferences") }}
+            </Divider>
+            <div class="col-12 md:col-3 mb-3">
+              <span class="p-float-label">
+                <InputNumber
+                  @blur="changeArmCircumference"
+                  id="armCircumference"
+                  v-model="armCircumference"
+                  class="w-full"
+                  suffix=" cm"
+                  :min="0"
+                  :minFractionDigits="2"
+                  :maxFractionDigits="2"
+                ></InputNumber>
+                <label for="armCircumference"
+                  >{{ $t("armCircumference") }} (cm)</label
                 >
               </span>
             </div>
@@ -252,6 +279,24 @@
               }}</span
               ><span v-else class="font-bold ml-2">--</span>
             </span>
+            <span
+              class="flex justify-content-between align-items-start flex-wrap mb-4 flex-column"
+            >
+              <span>{{ $t("muscularArmArea") }}</span
+              ><span v-if="muscularArmArea" class="font-bold ml-2">{{
+                muscularArmArea.toPrecision(5)
+              }}</span
+              ><span v-else class="font-bold ml-2">--</span>
+            </span>
+            <span
+              class="flex justify-content-between align-items-start flex-wrap mb-4 flex-column"
+            >
+              <span>{{ $t("muscularArmAreaPercentile") }}</span
+              ><span v-if="muscularArmAreaPercentile" class="font-bold ml-2">{{
+                muscularArmAreaPercentile
+              }}</span
+              ><span v-else class="font-bold ml-2">--</span>
+            </span>
           </div>
         </template>
       </Card>
@@ -280,27 +325,33 @@ const suprailiacSkinfold = ref()
 const bicepsSkinfold = ref()
 const wristDiameter = ref()
 const femurDiameter = ref()
-const bodyFatPercentage = ref()
+const armCircumference = ref()
 
+const bodyFatPercentage = ref()
 const bodyDensity = ref()
 const residualMass = ref()
 const boneMass = ref()
 const muscleMass = ref()
+const muscularArmArea = ref()
+const muscularArmAreaPercentile = ref()
 
 function changeSex() {
   calcBodyDensity()
   calcResidualMass()
   calcMuscleMass()
+  calcMuscularArmArea()
 }
 
 function changeAge() {
   calcBodyDensity()
   calcMuscleMass()
+  calcMuscularArmArea()
 }
 
 function changeTricepsSkinfold() {
   calcBodyDensity()
   calcMuscleMass()
+  calcMuscularArmArea()
 }
 
 function changeSubscapularSkinfold() {
@@ -337,6 +388,10 @@ function changeWristDiameter() {
 function changeFemurDiameter() {
   calcBoneMass()
   calcMuscleMass()
+}
+
+function changeArmCircumference() {
+  calcMuscularArmArea()
 }
 
 function calcBodyDensity() {
@@ -505,5 +560,209 @@ function calcMuscleMass() {
     return
   }
   muscleMass.value = null
+}
+
+function calcMuscularArmArea() {
+  if (age.value < 18) {
+    muscularArmArea.value =
+      (armCircumference.value - Math.PI * tricepsSkinfold.value) ** 2 /
+      (4 * Math.PI)
+    calcMuscularArmAreaPercentile()
+    return
+  } else if (age.value >= 18) {
+    if (sex.value == "M") {
+      muscularArmArea.value =
+        (armCircumference.value - Math.PI * tricepsSkinfold.value) ** 2 /
+          (4 * Math.PI) -
+        10
+      calcMuscularArmAreaPercentile()
+      return
+    } else if (sex.value == "F") {
+      muscularArmArea.value =
+        (armCircumference.value - Math.PI * tricepsSkinfold.value) ** 2 /
+          (4 * Math.PI) -
+        6.5
+      calcMuscularArmAreaPercentile()
+      return
+    }
+  }
+  muscularArmArea.value = null
+  calcMuscularArmAreaPercentile()
+}
+
+function calcMuscularArmAreaPercentile() {
+  let percentiles = [5, 10, 15, 25, 50, 75, 85, 90, 95]
+  let percentilesTable = {
+    M: [
+      [9.7, 10.4, 10.8, 11.6, 13, 14.6, 15.4, 16.3, 17.2],
+      [10.1, 10.9, 11.3, 12.4, 13.9, 15.6, 16.4, 16.9, 18.4],
+      [11.2, 12, 12.6, 13.5, 15, 16.4, 17.4, 18.3, 19.5],
+      [12, 12.9, 13.5, 14.5, 16.2, 17.9, 18.8, 19.8, 20.9],
+      [13.2, 14.2, 14.7, 15.7, 17.6, 19.5, 20.7, 21.7, 23.2],
+      [14.4, 15.3, 15.8, 16.8, 18.7, 21.3, 22.9, 23.8, 25.7],
+      [15.1, 16.2, 17, 18.5, 20.6, 22.6, 24.5, 25.2, 28.6],
+      [16.3, 17.8, 18.5, 19.5, 21.6, 24, 25.5, 26.6, 29],
+      [18.2, 19.3, 20.3, 21.7, 23.5, 26.7, 28.7, 30.4, 32.9],
+      [19.6, 20.7, 21.6, 23, 25.7, 29, 32.2, 34, 37.1],
+      [21, 22, 23, 24.8, 27.7, 31.6, 33.6, 36.1, 40.3],
+      [22.6, 24.1, 25.3, 26.9, 30.4, 35.9, 39.3, 40.9, 44.9],
+      [24.5, 26.7, 28.1, 30.4, 35.7, 41.3, 45.3, 48.1, 52.5],
+      [28.3, 31.3, 33.1, 36.1, 41.9, 47.4, 51.3, 54, 57.5],
+      [31.9, 34.9, 36.9, 40.3, 46.3, 53.1, 56.3, 57.7, 63],
+      [37, 40.9, 42.4, 45.9, 51.9, 57.8, 63.6, 66.2, 70.5],
+      [39.6, 42.6, 44.8, 48, 53.4, 60.4, 64.3, 67.9, 73.1],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72], //18
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [34.2, 37.3, 39.6, 42.7, 49.4, 57.1, 61.8, 65, 72],
+      [36.6, 39.9, 42.4, 46, 53, 61.4, 66.1, 68.9, 74.5],
+      [36.6, 39.9, 42.4, 46, 53, 61.4, 66.1, 68.9, 74.5],
+      [36.6, 39.9, 42.4, 46, 53, 61.4, 66.1, 68.9, 74.5],
+      [36.6, 39.9, 42.4, 46, 53, 61.4, 66.1, 68.9, 74.5],
+      [36.6, 39.9, 42.4, 46, 53, 61.4, 66.1, 68.9, 74.5],
+      [37.9, 40.9, 43.4, 47.3, 54.4, 63.2, 67.6, 70.8, 76.1],
+      [37.9, 40.9, 43.4, 47.3, 54.4, 63.2, 67.6, 70.8, 76.1],
+      [37.9, 40.9, 43.4, 47.3, 54.4, 63.2, 67.6, 70.8, 76.1],
+      [37.9, 40.9, 43.4, 47.3, 54.4, 63.2, 67.6, 70.8, 76.1],
+      [37.9, 40.9, 43.4, 47.3, 54.4, 63.2, 67.6, 70.8, 76.1],
+      [38.5, 42.6, 44.6, 47.9, 55.3, 64, 69.1, 72.7, 77.6],
+      [38.5, 42.6, 44.6, 47.9, 55.3, 64, 69.1, 72.7, 77.6],
+      [38.5, 42.6, 44.6, 47.9, 55.3, 64, 69.1, 72.7, 77.6],
+      [38.5, 42.6, 44.6, 47.9, 55.3, 64, 69.1, 72.7, 77.6],
+      [38.5, 42.6, 44.6, 47.9, 55.3, 64, 69.1, 72.7, 77.6],
+      [38.4, 42.1, 45.1, 48.7, 56, 64, 68.5, 71.6, 77],
+      [38.4, 42.1, 45.1, 48.7, 56, 64, 68.5, 71.6, 77],
+      [38.4, 42.1, 45.1, 48.7, 56, 64, 68.5, 71.6, 77],
+      [38.4, 42.1, 45.1, 48.7, 56, 64, 68.5, 71.6, 77],
+      [38.4, 42.1, 45.1, 48.7, 56, 64, 68.5, 71.6, 77],
+      [37.7, 41.3, 43.7, 47.9, 55.2, 63.3, 68.4, 72.2, 76.2],
+      [37.7, 41.3, 43.7, 47.9, 55.2, 63.3, 68.4, 72.2, 76.2],
+      [37.7, 41.3, 43.7, 47.9, 55.2, 63.3, 68.4, 72.2, 76.2],
+      [37.7, 41.3, 43.7, 47.9, 55.2, 63.3, 68.4, 72.2, 76.2],
+      [37.7, 41.3, 43.7, 47.9, 55.2, 63.3, 68.4, 72.2, 76.2],
+      [36, 40, 42.7, 46.6, 54, 62.7, 67, 70.4, 77.4],
+      [36, 40, 42.7, 46.6, 54, 62.7, 67, 70.4, 77.4],
+      [36, 40, 42.7, 46.6, 54, 62.7, 67, 70.4, 77.4],
+      [36, 40, 42.7, 46.6, 54, 62.7, 67, 70.4, 77.4],
+      [36, 40, 42.7, 46.6, 54, 62.7, 67, 70.4, 77.4],
+      [36.5, 40.8, 42.7, 46.7, 54.3, 61.9, 66.4, 69.6, 75.1],
+      [36.5, 40.8, 42.7, 46.7, 54.3, 61.9, 66.4, 69.6, 75.1],
+      [36.5, 40.8, 42.7, 46.7, 54.3, 61.9, 66.4, 69.6, 75.1],
+      [36.5, 40.8, 42.7, 46.7, 54.3, 61.9, 66.4, 69.6, 75.1],
+      [36.5, 40.8, 42.7, 46.7, 54.3, 61.9, 66.4, 69.6, 75.1],
+      [34.5, 38.7, 41.2, 44.9, 52.1, 60, 64.8, 67.5, 71.6],
+      [34.5, 38.7, 41.2, 44.9, 52.1, 60, 64.8, 67.5, 71.6],
+      [34.5, 38.7, 41.2, 44.9, 52.1, 60, 64.8, 67.5, 71.6],
+      [34.5, 38.7, 41.2, 44.9, 52.1, 60, 64.8, 67.5, 71.6],
+      [34.5, 38.7, 41.2, 44.9, 52.1, 60, 64.8, 67.5, 71.6],
+      [31.4, 35.8, 38.4, 42.3, 49.1, 57.3, 61.2, 64.3, 69.4],
+      [31.4, 35.8, 38.4, 42.3, 49.1, 57.3, 61.2, 64.3, 69.4],
+      [31.4, 35.8, 38.4, 42.3, 49.1, 57.3, 61.2, 64.3, 69.4],
+      [31.4, 35.8, 38.4, 42.3, 49.1, 57.3, 61.2, 64.3, 69.4],
+      [31.4, 35.8, 38.4, 42.3, 49.1, 57.3, 61.2, 64.3, 69.4],
+      [29.7, 33.8, 36.1, 40.2, 47, 54.6, 59.1, 62.1, 67.3],
+    ],
+    F: [
+      [8.9, 9.7, 10.1, 10.8, 12.3, 13.8, 14.6, 15.3, 16.2],
+      [10.1, 10.6, 10.9, 11.8, 13.2, 14.7, 15.6, 16.4, 17.3],
+      [10.8, 11.4, 11.8, 12.6, 14.3, 15.8, 16.7, 17.4, 18.8],
+      [11.2, 12.2, 12.7, 13.6, 15.3, 17, 18, 18.6, 19.8],
+      [12.4, 13.2, 13.9, 14.8, 16.4, 18.3, 19.4, 20.6, 22.1],
+      [13.5, 14.1, 14.6, 15.6, 17.4, 19.5, 21, 22, 24.2],
+      [14.4, 15.2, 15.8, 16.7, 18.9, 21.2, 22.6, 23.9, 25.3],
+      [15.2, 16, 16.8, 18.2, 20.8, 23.2, 24.6, 26.5, 28],
+      [17, 17.9, 18.7, 19.8, 21.9, 25.4, 27.2, 28.3, 31.1],
+      [17.6, 18.5, 19.3, 20.9, 23.8, 27, 29.1, 31, 33.1],
+      [19.5, 21, 21.7, 23.2, 26.4, 30.7, 33.5, 35.7, 39.2],
+      [20.4, 21.8, 23.1, 25.5, 29, 33.2, 36.3, 37.8, 40.5],
+      [22.8, 24.5, 25.4, 27.1, 30.8, 35.3, 38.1, 39.6, 43.7],
+      [24, 26.2, 27.1, 29, 32.8, 36.9, 39.8, 42.3, 47.5],
+      [24.4, 25.8, 27.5, 29.2, 33, 37.3, 40.2, 41.7, 45.9],
+      [25.2, 26.8, 28.2, 30, 33.6, 38, 40.2, 43.7, 48.3],
+      [25.9, 27.5, 28.9, 30.7, 34.3, 39.6, 43.4, 46.2, 50.8],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [20.5, 21.9, 23.1, 25.2, 29.4, 34.9, 38.5, 41.9, 47.8],
+      [20.5, 21.9, 23.1, 25.2, 29.4, 34.9, 38.5, 41.9, 47.8],
+      [20.5, 21.9, 23.1, 25.2, 29.4, 34.9, 38.5, 41.9, 47.8],
+      [20.5, 21.9, 23.1, 25.2, 29.4, 34.9, 38.5, 41.9, 47.8],
+      [20.5, 21.9, 23.1, 25.2, 29.4, 34.9, 38.5, 41.9, 47.8],
+      [21.1, 23, 24.2, 26.3, 30.9, 36.8, 41.2, 44.7, 51.3],
+      [21.1, 23, 24.2, 26.3, 30.9, 36.8, 41.2, 44.7, 51.3],
+      [21.1, 23, 24.2, 26.3, 30.9, 36.8, 41.2, 44.7, 51.3],
+      [21.1, 23, 24.2, 26.3, 30.9, 36.8, 41.2, 44.7, 51.3],
+      [21.1, 23, 24.2, 26.3, 30.9, 36.8, 41.2, 44.7, 51.3],
+      [21.1, 23.4, 24.7, 27.3, 31.8, 38.7, 43.1, 46.1, 54.2],
+      [21.1, 23.4, 24.7, 27.3, 31.8, 38.7, 43.1, 46.1, 54.2],
+      [21.1, 23.4, 24.7, 27.3, 31.8, 38.7, 43.1, 46.1, 54.2],
+      [21.1, 23.4, 24.7, 27.3, 31.8, 38.7, 43.1, 46.1, 54.2],
+      [21.1, 23.4, 24.7, 27.3, 31.8, 38.7, 43.1, 46.1, 54.2],
+      [21.3, 23.4, 25.5, 27.5, 32.3, 39.8, 45.8, 49.5, 55.8],
+      [21.3, 23.4, 25.5, 27.5, 32.3, 39.8, 45.8, 49.5, 55.8],
+      [21.3, 23.4, 25.5, 27.5, 32.3, 39.8, 45.8, 49.5, 55.8],
+      [21.3, 23.4, 25.5, 27.5, 32.3, 39.8, 45.8, 49.5, 55.8],
+      [21.3, 23.4, 25.5, 27.5, 32.3, 39.8, 45.8, 49.5, 55.8],
+      [21.6, 23.1, 24.8, 27.4, 32.5, 39.5, 44.7, 48.4, 56.1],
+      [21.6, 23.1, 24.8, 27.4, 32.5, 39.5, 44.7, 48.4, 56.1],
+      [21.6, 23.1, 24.8, 27.4, 32.5, 39.5, 44.7, 48.4, 56.1],
+      [21.6, 23.1, 24.8, 27.4, 32.5, 39.5, 44.7, 48.4, 56.1],
+      [21.6, 23.1, 24.8, 27.4, 32.5, 39.5, 44.7, 48.4, 56.1],
+      [22.2, 24.6, 25.7, 28.3, 33.4, 40.4, 46.1, 49.6, 55.6],
+      [22.2, 24.6, 25.7, 28.3, 33.4, 40.4, 46.1, 49.6, 55.6],
+      [22.2, 24.6, 25.7, 28.3, 33.4, 40.4, 46.1, 49.6, 55.6],
+      [22.2, 24.6, 25.7, 28.3, 33.4, 40.4, 46.1, 49.6, 55.6],
+      [22.2, 24.6, 25.7, 28.3, 33.4, 40.4, 46.1, 49.6, 55.6],
+      [22.8, 24.8, 26.5, 28.7, 33.7, 42.3, 47.3, 52.1, 58.8],
+      [22.8, 24.8, 26.5, 28.7, 33.7, 42.3, 47.3, 52.1, 58.8],
+      [22.8, 24.8, 26.5, 28.7, 33.7, 42.3, 47.3, 52.1, 58.8],
+      [22.8, 24.8, 26.5, 28.7, 33.7, 42.3, 47.3, 52.1, 58.8],
+      [22.8, 24.8, 26.5, 28.7, 33.7, 42.3, 47.3, 52.1, 58.8],
+      [22.4, 24.5, 26.3, 29.2, 34.5, 41.1, 45.6, 49.1, 55.1],
+      [22.4, 24.5, 26.3, 29.2, 34.5, 41.1, 45.6, 49.1, 55.1],
+      [22.4, 24.5, 26.3, 29.2, 34.5, 41.1, 45.6, 49.1, 55.1],
+      [22.4, 24.5, 26.3, 29.2, 34.5, 41.1, 45.6, 49.1, 55.1],
+      [22.4, 24.5, 26.3, 29.2, 34.5, 41.1, 45.6, 49.1, 55.1],
+      [21.9, 24.5, 26.2, 28.9, 34.6, 41.6, 46.3, 49.6, 56.5],
+      [21.9, 24.5, 26.2, 28.9, 34.6, 41.6, 46.3, 49.6, 56.5],
+      [21.9, 24.5, 26.2, 28.9, 34.6, 41.6, 46.3, 49.6, 56.5],
+      [21.9, 24.5, 26.2, 28.9, 34.6, 41.6, 46.3, 49.6, 56.5],
+      [21.9, 24.5, 26.2, 28.9, 34.6, 41.6, 46.3, 49.6, 56.5],
+      [22.2, 24.4, 26, 28.8, 34.3, 41.8, 46.4, 49.2, 54.6],
+    ],
+  }
+
+  if (sex.value && age.value) {
+    let ageLine = percentilesTable[sex.value][age.value]
+
+    for (let i = 0; i < 9; i++) {
+      if (i == 0) {
+        if (muscularArmArea.value <= ageLine[i]) {
+          muscularArmAreaPercentile.value = percentiles[i]
+          return
+        } else {
+          muscularArmAreaPercentile.value = null
+        }
+      } else if (i >= 1) {
+        if (
+          muscularArmArea.value <= ageLine[i] &&
+          muscularArmArea.value > ageLine[i - 1]
+        ) {
+          muscularArmAreaPercentile.value = percentiles[i]
+          return
+        }
+      }
+    }
+    muscularArmAreaPercentile.value = null
+  } else {
+    muscularArmAreaPercentile.value = null
+  }
 }
 </script>
