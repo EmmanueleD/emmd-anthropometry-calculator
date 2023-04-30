@@ -255,6 +255,16 @@
             <span
               class="flex justify-content-between align-items-start flex-wrap mb-4 flex-column"
             >
+              <span>{{ $t("bodyFatPercentagePercentile") }}</span
+              ><span
+                v-if="bodyFatPercentagePercentile"
+                class="font-bold ml-2"
+                >{{ bodyFatPercentagePercentile }}</span
+              ><span v-else class="font-bold ml-2">--</span>
+            </span>
+            <span
+              class="flex justify-content-between align-items-start flex-wrap mb-4 flex-column"
+            >
               <span>{{ $t("residualMass") }}</span
               ><span v-if="residualMass" class="font-bold ml-2">{{
                 residualMass.toPrecision(5)
@@ -334,18 +344,21 @@ const boneMass = ref()
 const muscleMass = ref()
 const muscularArmArea = ref()
 const muscularArmAreaPercentile = ref()
+const bodyFatPercentagePercentile = ref()
 
 function changeSex() {
   calcBodyDensity()
   calcResidualMass()
   calcMuscleMass()
   calcMuscularArmArea()
+  calcBodyFatPercentagePercentile()
 }
 
 function changeAge() {
   calcBodyDensity()
   calcMuscleMass()
   calcMuscularArmArea()
+  calcBodyFatPercentagePercentile()
 }
 
 function changeTricepsSkinfold() {
@@ -514,6 +527,7 @@ function calcBodyDensity() {
 function calcBodyFatPercentage() {
   if (bodyDensity.value) {
     bodyFatPercentage.value = 495 / bodyDensity.value - 450
+    calcBodyFatPercentagePercentile()
     return
   }
   bodyFatPercentage.value = null
@@ -525,6 +539,97 @@ const fatMass = computed(() => {
   }
   return 0
 })
+
+function calcBodyFatPercentagePercentile() {
+  let percentiles = [5, 10, 15, 25, 50, 75, 85, 90, 95]
+
+  let percentilesTable = {
+    M: [
+      [8, 9, 10, 12, 16, 20, 23, 25, 28],
+      [9, 10, 11, 13, 18, 23, 25, 26, 29],
+      [16, 17, 18, 20, 23, 26, 27, 28, 30],
+      [15, 17, 18, 20, 23, 25, 27, 27, 29],
+      [14, 16, 18, 21, 26, 30, 32, 34, 36],
+      [15, 17, 19, 21, 26, 30, 32, 34, 36],
+      [15, 17, 19, 22, 27, 31, 33, 35, 37],
+      [15, 18, 20, 22, 27, 31, 33, 35, 37],
+      [16, 18, 20, 22, 27, 31, 33, 35, 37],
+      [13, 16, 18, 21, 26, 30, 33, 35, 37],
+      [13, 16, 18, 21, 26, 30, 33, 34, 36],
+    ],
+    F: [
+      [17, 19, 21, 23, 27, 33, 35, 37, 40],
+      [18, 20, 21, 24, 29, 34, 37, 39, 41],
+      [21, 23, 25, 27, 31, 36, 38, 40, 42],
+      [22, 24, 25, 28, 32, 37, 39, 40, 42],
+      [25, 28, 29, 31, 35, 39, 41, 42, 43],
+      [26, 28, 29, 32, 36, 39, 41, 42, 44],
+      [27, 30, 32, 35, 39, 43, 46, 47, 48],
+      [27, 30, 32, 35, 39, 44, 45, 47, 49],
+      [28, 31, 32, 35, 40, 43, 45, 46, 48],
+      [27, 30, 32, 34, 38, 42, 44, 46, 47],
+      [26, 29, 31, 34, 38, 42, 44, 45, 47],
+    ],
+  }
+
+  if (age.value && fatMass.value) {
+    let ageLine = []
+
+    if (age.value >= 18 && age.value < 25) {
+      ageLine.push(...percentilesTable[sex.value][0])
+    }
+    if (age.value >= 25 && age.value < 30) {
+      ageLine.push(...percentilesTable[sex.value][1])
+    }
+    if (age.value >= 30 && age.value < 35) {
+      ageLine.push(...percentilesTable[sex.value][2])
+    }
+    if (age.value >= 35 && age.value < 40) {
+      ageLine.push(...percentilesTable[sex.value][3])
+    }
+    if (age.value >= 40 && age.value < 45) {
+      ageLine.push(...percentilesTable[sex.value][4])
+    }
+    if (age.value >= 45 && age.value < 50) {
+      ageLine.push(...percentilesTable[sex.value][5])
+    }
+    if (age.value >= 50 && age.value < 55) {
+      ageLine.push(...percentilesTable[sex.value][6])
+    }
+    if (age.value >= 55 && age.value < 60) {
+      ageLine.push(...percentilesTable[sex.value][7])
+    }
+    if (age.value >= 60 && age.value < 65) {
+      ageLine.push(...percentilesTable[sex.value][8])
+    }
+    if (age.value >= 65 && age.value < 70) {
+      ageLine.push(...percentilesTable[sex.value][9])
+    }
+    if (age.value >= 70 && age.value < 75) {
+      ageLine.push(...percentilesTable[sex.value][10])
+    }
+
+    for (let i = 0; i < 9; i++) {
+      if (i == 0) {
+        if (fatMass.value < ageLine[i]) {
+          bodyFatPercentagePercentile.value = percentiles[i]
+          return
+        } else {
+          bodyFatPercentagePercentile.value = null
+        }
+      } else if (i >= 1) {
+        if (fatMass.value >= ageLine[i - 1] && fatMass.value < ageLine[i]) {
+          bodyFatPercentagePercentile.value = percentiles[i]
+          return
+        } else {
+          bodyFatPercentagePercentile.value = null
+        }
+      }
+    }
+  } else {
+    bodyFatPercentagePercentile.value = null
+  }
+}
 
 function calcResidualMass() {
   if (weight.value) {
@@ -683,7 +788,7 @@ function calcMuscularArmAreaPercentile() {
       [24.4, 25.8, 27.5, 29.2, 33, 37.3, 40.2, 41.7, 45.9],
       [25.2, 26.8, 28.2, 30, 33.6, 38, 40.2, 43.7, 48.3],
       [25.9, 27.5, 28.9, 30.7, 34.3, 39.6, 43.4, 46.2, 50.8],
-      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
+      [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2], // 18
       [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
       [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],
       [19.5, 21.5, 22.8, 24.5, 28.3, 33.1, 36.4, 39, 44.2],

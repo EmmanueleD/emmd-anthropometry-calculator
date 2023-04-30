@@ -1,6 +1,6 @@
 const messages = {
   de: {
-    appName: "EMMD Anthropometrischer Rechner",
+    appName: "Anthropometrischer Rechner EMMD",
     generalCalculator: "",
     sex: "Geschlecht",
     age: "Alter",
@@ -15,6 +15,7 @@ const messages = {
     armCircumference: "Armumfang",
     bodyDensity: "Körperdichte",
     bodyFatPercentage: "Körperfettanteil",
+    bodyFatPercentagePercentile: "Körperfettanteil Perzentil",
     fatMass: "Fettmasse",
     residualMass: "Restmasse",
     boneMass: "Knochenmasse",
@@ -44,7 +45,7 @@ const messages = {
     },
   },
   en: {
-    appName: "EMMD Anthropometric Calculator",
+    appName: "Anthropometric Calculator EMMD",
     generalCalculator: "",
     sex: "Sex",
     age: "Age",
@@ -59,6 +60,7 @@ const messages = {
     armCircumference: "Arm Circumference",
     bodyDensity: "Body Density",
     bodyFatPercentage: "Body Fat Percentage",
+    bodyFatPercentagePercentile: "Body Fat Percentage Percentile",
     fatMass: "Fat mass",
     residualMass: "Residual Mass",
     boneMass: "Bone Mass",
@@ -88,7 +90,7 @@ const messages = {
     },
   },
   es: {
-    appName: "EMMD Calculadora Antropométrica",
+    appName: "Calculadora Antropométrica EMMD",
     generalCalculator: "",
     sex: "Sexo",
     age: "Edad",
@@ -103,6 +105,7 @@ const messages = {
     armCircumference: "Circunferencia de brazo",
     bodyDensity: "Densidad corporal",
     bodyFatPercentage: "Porcentaje de grasa corporal",
+    bodyFatPercentagePercentile: "Percentil del porcentaje de grasa corporal",
     fatMass: "Masa grasa",
     residualMass: "Masa residual",
     boneMass: "Masa ósea",
@@ -132,7 +135,7 @@ const messages = {
     },
   },
   fr: {
-    appName: "EMMD Calculateur Anthropométrique",
+    appName: "Calculateur Anthropométrique EMMD",
     generalCalculator: "",
     sex: "Sexe",
     age: "Âge",
@@ -147,6 +150,8 @@ const messages = {
     armCircumference: "Circonférence du bras",
     bodyDensity: "Densité corporelle",
     bodyFatPercentage: "Pourcentage de graisse corporelle",
+    bodyFatPercentagePercentile:
+      "Percentile du pourcentage de graisse corporelle",
     fatMass: "Masse grasse",
     residualMass: "Masse résiduelle",
     boneMass: "Masse osseuse",
@@ -177,7 +182,7 @@ const messages = {
     },
   },
   it: {
-    appName: "EMMD Calcolatore Antropometrico",
+    appName: "Calcolatore Antropometrico EMMD",
     generalCalculator: "",
     sex: "Sesso",
     age: "Età",
@@ -192,6 +197,8 @@ const messages = {
     armCircumference: "Circonferenza del braccio",
     bodyDensity: "Densità corporea",
     bodyFatPercentage: "Percentuale di grasso corporeo",
+    bodyFatPercentagePercentile:
+      "Percentile della percentuale di grasso corporeo",
     fatMass: "Massa grassa",
     residualMass: "Massa residua",
     boneMass: "Massa ossea",
@@ -222,7 +229,7 @@ const messages = {
     },
   },
   pt: {
-    appName: "EMMD Calculadora Antropométrica",
+    appName: "Calculadora Antropométrica EMMD",
     generalCalculator: "",
     sex: "Sexo",
     age: "Idade",
@@ -237,6 +244,7 @@ const messages = {
     armCircumference: "Circunferência do braço",
     bodyDensity: "Densidade corporal",
     bodyFatPercentage: "Percentual de gordura corporal",
+    bodyFatPercentagePercentile: "Percentil do percentual de gordura corporal",
     fatMass: "Massa gorda",
     residualMass: "Massa residual",
     boneMass: "Massa óssea",
