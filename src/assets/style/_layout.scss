@@ -1,4 +1,13 @@
+.app-header {
+  height: 50px;
+  background-color: #ffe4c4;
+}
+
+.body {
+  min-height: calc(100vh - 72px);
+}
+
 .app-footer {
   height: 22px;
-  background-color: bisque;
+  background-color: #ffe4c4;
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <div class="header"></div>
+    <div class="header">
+      <AppHeader></AppHeader>
+    </div>
     <div class="body">
       <router-view />
     </div>
@@ -11,4 +13,5 @@
 </template>
 <script setup>
 import AppFooter from "./components/layout/AppFooter.vue"
+import AppHeader from "./components/layout/AppHeader.vue"
 </script>
