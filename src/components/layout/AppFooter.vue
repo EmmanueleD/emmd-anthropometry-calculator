@@ -11,6 +11,10 @@
         src="../../assets/img/emmd-logo.png"
       />
     </div>
+    <small
+      >Derechos de autor © NutriTools 2023. Todos los derechos
+      reservados.</small
+    >
     <span
       ><label class="mr-2">{{ $t("language.changeTheLanguage") }}</label
       ><select v-model="$i18n.locale">

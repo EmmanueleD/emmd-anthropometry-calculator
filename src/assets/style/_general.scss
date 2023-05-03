@@ -9,6 +9,14 @@ body {
   font-size: 12px;
 }
 
+.page {
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  display: grid;
+  place-content: center;
+  background-color: #ffffffdc;
+}
+
 .container {
   width: 100%;
   // min-height: calc(100vh - 50px);

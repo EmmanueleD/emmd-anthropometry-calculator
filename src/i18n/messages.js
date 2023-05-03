@@ -1,6 +1,5 @@
 const messages = {
   de: {
-    appName: "Anthropometrischer Rechner EMMD",
     generalCalculator: "",
     sex: "Geschlecht",
     age: "Alter",
@@ -45,7 +44,6 @@ const messages = {
     },
   },
   en: {
-    appName: "Anthropometric Calculator EMMD",
     generalCalculator: "",
     sex: "Sex",
     age: "Age",
@@ -90,7 +88,6 @@ const messages = {
     },
   },
   es: {
-    appName: "Calculadora Antropométrica EMMD",
     generalCalculator: "",
     sex: "Sexo",
     age: "Edad",
@@ -135,7 +132,6 @@ const messages = {
     },
   },
   fr: {
-    appName: "Calculateur Anthropométrique EMMD",
     generalCalculator: "",
     sex: "Sexe",
     age: "Âge",
@@ -182,7 +178,6 @@ const messages = {
     },
   },
   it: {
-    appName: "Calcolatore Antropometrico EMMD",
     generalCalculator: "",
     sex: "Sesso",
     age: "Età",
@@ -229,7 +224,6 @@ const messages = {
     },
   },
   pt: {
-    appName: "Calculadora Antropométrica EMMD",
     generalCalculator: "",
     sex: "Sexo",
     age: "Idade",
